@@ -32,11 +32,11 @@ func NewInitWindow(win InitWin) {
     if win.Logo == "" {
         win.Logo = defLogo
     }
+
+    // 新建主题
     t := tui.NewTheme()
 
-    // 设置进度条
-    progress := tui.NewProgress(100)
-    progress.SetSizePolicy(tui.Expanding, tui.Maximum)
+    // 新建一个提示信息
     prompt := tui.NewLabel(win.Prompt)
 
     // 新建窗口容纳上述内容，以及有一个蓝色背景
@@ -59,10 +59,21 @@ func NewInitWindow(win InitWin) {
     content := tui.NewHBox(tui.NewSpacer(), wrapper, tui.NewSpacer())
 
     // 新建屏幕
-    root := tui.NewVBox(
-        content,
-        tui.NewPadder(0, 0, progress),
-    )
+    var root *tui.Box
+    var progress *tui.Progress
+    if win.NeedProgBar {
+        // 设置进度条
+        progress = tui.NewProgress(100)
+        progress.SetSizePolicy(tui.Expanding, tui.Maximum)
+        root = tui.NewVBox(
+            content,
+            tui.NewPadder(0, 0, progress),
+        )
+    } else {
+        root = tui.NewVBox(
+            content,
+        )
+    }
 
     // 新建UI及设置它的主题
     ui, err := tui.New(root)
@@ -85,6 +96,11 @@ func NewInitWindow(win InitWin) {
             }
             ui.Quit()
         }(ui, win.ShowPeriod, progress)
+    } else {
+        go func(ui tui.UI) {
+            time.Sleep(time.Duration(win.ShowPeriod) * time.Millisecond)
+            ui.Quit()
+        }(ui)
     }
 
     if err := ui.Run(); err != nil {
