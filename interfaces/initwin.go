@@ -20,12 +20,12 @@ func InitWinTest() {
     init.ShowPeriod = 2000
     init.NeedProgBar = false
 
-    NewInitWindow(init)
+    NewInitWindow(&init)
 
     log.Println("Closed.")
 }
 
-func NewInitWindow(win InitWin) {
+func NewInitWindow(win* InitWin) {
     // 设置logo
     if win.Logo == "" {
         win.Logo = defLogo

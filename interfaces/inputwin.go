@@ -9,7 +9,6 @@ import (
 type InputWin struct {
     MainTitle       string
     InputWinName    string
-    InputBoxCount   int
     InputBoxNames   []string
     Button          []string
 }
@@ -21,7 +20,6 @@ func InputWinTest() {
     tbl.InputBoxNames = []string {
         "No.", "Name.", "Date",
     }
-    tbl.InputBoxCount = len(tbl.InputBoxNames)
 
     tbl.Button = []string {
         "Search",
@@ -38,7 +36,8 @@ func InputWinTest() {
 
 func NewInputWin(win *InputWin) (selectedButton int, text []string) {
     selectedButton = 0
-    text = make([]string, win.InputBoxCount)
+    inputBoxCount := len(win.InputBoxNames)
+    text = make([]string, inputBoxCount)
 
     // 新建主题
     t := tui.NewTheme()
@@ -66,9 +65,9 @@ func NewInputWin(win *InputWin) (selectedButton int, text []string) {
 
     // 新建一个vbox用来容纳各个txtBox
     txtBoxes := tui.NewVBox()
-    widges := make([]tui.Widget, win.InputBoxCount + len(win.Button))
-    txtBoxesCollEntr := make([]*tui.Entry, win.InputBoxCount)
-    for i := 0; i < win.InputBoxCount; i++ {
+    widges := make([]tui.Widget, inputBoxCount + len(win.Button))
+    txtBoxesCollEntr := make([]*tui.Entry, inputBoxCount)
+    for i := 0; i < inputBoxCount; i++ {
         inp := tui.NewEntry()
         inpBox := &StyledBox {
             Style: "txtBox",
@@ -131,7 +130,7 @@ func NewInputWin(win *InputWin) (selectedButton int, text []string) {
         // 设置按钮事件
         choicesMap[but] = i
         choices[i] = tui.NewPadder(1, 1, but)
-        widges[win.InputBoxCount + i] = but
+        widges[inputBoxCount + i] = but
         but.OnActivated(func(b *tui.Button) {
             selectedButton = choicesMap[b]
             for j, txt := range txtBoxesCollEntr {
