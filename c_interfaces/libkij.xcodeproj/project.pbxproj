@@ -248,7 +248,7 @@
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"";
-				OTHER_LDFLAGS = "-lkij_go";
+				OTHER_LDFLAGS = "-lkij_go_mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
