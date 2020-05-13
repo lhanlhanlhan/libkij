@@ -1,0 +1,39 @@
+; .text   : RVA: 00001000, File offset: 00000600
+; .data   : RVA: 00162000, File offset: 00161000
+; .rdata  : RVA: 0017e000, File offset: 0017ce00
+; .pdata  : RVA: 002e8000, File offset: 002e6a00
+; .xdata  : RVA: 002e9000, File offset: 002e6e00
+; .bss    : RVA: 002ea000, File offset: 00000000
+; .edata  : RVA: 0031b000, File offset: 002e7200
+; .idata  : RVA: 0031c000, File offset: 002e7400
+; .CRT    : RVA: 0031d000, File offset: 002e8200
+; .tls    : RVA: 0031e000, File offset: 002e8400
+; .rsrc   : RVA: 0031f000, File offset: 002e8600
+; .reloc  : RVA: 00320000, File offset: 002e8a00
+; /4      : RVA: 00330000, File offset: 002f8400
+; /19     : RVA: 00331000, File offset: 002f8a00
+; /35     : RVA: 0033c000, File offset: 00303600
+; /51     : RVA: 00353000, File offset: 0031a200
+; /63     : RVA: 00433000, File offset: 003f9400
+; /77     : RVA: 00436000, File offset: 003fb600
+; /89     : RVA: 0049f000, File offset: 00464000
+; /102    : RVA: 004c0000, File offset: 00484c00
+; /113    : RVA: 004c1000, File offset: 00484e00
+; /124    : RVA: 005c9000, File offset: 0058c800
+; Reading exports from section: .edata
+; Export table: libkij.dll
+; Ordinal base: 1
+; Ordinal table RVA: 0031b070
+; Name table RVA: 031b04c
+; Export address table RVA: 0031b028
+LIBRARY libkij.dll
+EXPORTS
+Kij_Destroy_AuthWin_Results ; .text ; RVA 00001494
+Kij_Destroy_InputWin_Results ; .text ; RVA 000015e8
+Kij_NewAuthWin ; .text ; RVA 00001430
+Kij_NewErrorWin ; .text ; RVA 000014cf
+Kij_NewInfoWin ; .text ; RVA 00001513
+Kij_NewInitWin ; .text ; RVA 00001734
+Kij_NewInputWin ; .text ; RVA 00001557
+Kij_NewSelectWin ; .text ; RVA 0000164d
+Kij_NewTableWin ; .text ; RVA 000016b1
