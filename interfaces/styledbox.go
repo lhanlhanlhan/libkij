@@ -1,6 +1,6 @@
 package interfaces
 
-import "github.com/marcusolsson/tui-go"
+import "github.com/chrishanli/tui-go"
 
 // StyledBox is a Box with an overriden Draw method.
 // Embedding a Widget within another allows overriding of some behaviors.

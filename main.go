@@ -8,6 +8,8 @@ import (
 
 func main() {
     interfaces.AuthWinTest()
+    interfaces.ErrorWinTest()
+    interfaces.InfoWinTest()
 }
 
 //export NewAuthWin

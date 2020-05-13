@@ -1,7 +1,7 @@
 package interfaces
 
 import (
-    "github.com/marcusolsson/tui-go"
+    "github.com/chrishanli/tui-go"
     "log"
     "time"
 )

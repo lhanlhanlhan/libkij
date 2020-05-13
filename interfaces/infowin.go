@@ -2,7 +2,7 @@ package interfaces
 
 import (
     "fmt"
-    "github.com/marcusolsson/tui-go"
+    "github.com/chrishanli/tui-go"
     "log"
 )
 
@@ -43,7 +43,13 @@ func NewInfoWin(win *InfoWin) (selectedButton int) {
     windowBox := tui.NewVBox()
 
     // 窗口标题
-    windowBox.Append(tui.NewPadder(1, 1, tui.NewHBox(tui.NewSpacer(), tui.NewLabel(win.InfoWinTitle), tui.NewSpacer())))
+    windowTitle := &StyledBox {
+        Style : "tabletitle",
+        Box : tui.NewHBox(tui.NewSpacer(), tui.NewLabel(win.InfoWinTitle), tui.NewSpacer()),
+    }
+    t.SetStyle("tabletitle", tui.Style{Bg: tui.ColorCyan, Fg: tui.ColorWhite})
+    windowBox.Append(tui.NewPadder(1, 1, windowTitle))
+
     // 窗口描述
     if win.Info != "" {
         windowBox.Append(tui.NewPadder(1, 0, tui.NewLabel(win.Info)))

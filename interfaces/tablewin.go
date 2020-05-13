@@ -2,7 +2,7 @@ package interfaces
 
 import (
     "fmt"
-    "github.com/marcusolsson/tui-go"
+    "github.com/chrishanli/tui-go"
     "log"
     "strings"
 )

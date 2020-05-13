@@ -1,7 +1,7 @@
 package interfaces
 
 import (
-    "github.com/marcusolsson/tui-go"
+    "github.com/chrishanli/tui-go"
     "log"
 )
 
@@ -73,17 +73,23 @@ func NewAuthWindow(win *AuthWin) (username, passcode string) {
     // 收集按钮
     buttons := tui.NewHBox (
         tui.NewSpacer(),
-        tui.NewPadder(1, 0, btnLogin),
+        tui.NewPadder(1, 1, btnLogin),
+        tui.NewSpacer(),
     )
 
     // 新建窗口容纳上述内容，及有一个border
-    window := tui.NewVBox(
+    windowBox := tui.NewVBox(
         tui.NewPadder(10, 1, tui.NewHBox(tui.NewSpacer(), tui.NewLabel(win.Logo), tui.NewSpacer())),
         tui.NewPadder(12, 0, tui.NewHBox(tui.NewSpacer(), tui.NewLabel(win.Prompt), tui.NewSpacer())),
         tui.NewPadder(1, 1, tui.NewHBox(captions, txtBoxes)),
         buttons,
     )
-    window.SetBorder(true)
+
+    window := &StyledBox{
+        Style: "selectwin",
+        Box:   windowBox,
+    }
+    t.SetStyle("selectwin", tui.Style{Bg: tui.ColorBlue, Fg: tui.ColorWhite})
 
     // 新建纵向框架
     wrapper := tui.NewVBox(
@@ -113,7 +119,6 @@ func NewAuthWindow(win *AuthWin) (username, passcode string) {
         username = userEntry.Text()
         passcode = pwEntry.Text()
         ui.Quit()
-
     })
     t.SetStyle("button.focused", tui.Style{Bg: tui.ColorWhite, Fg: tui.ColorBlack})
 
