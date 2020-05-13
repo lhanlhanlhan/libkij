@@ -14,29 +14,37 @@ type SelectWin struct {
     StatusBarContent    string
 }
 
-func NewSelectWin(win SelectWin) (selectedItem int) {
+func SelectWinTest() {
+    var sel SelectWin
+    sel.MainTitle = " -- XMU Supermarket --"
+    sel.ChoicePadTitle = "World!"
+    sel.ChoicePadDesc = "Please select!"
+    sel.Choices = []string {
+        "jujuju", "pangpangpang",
+    }
+    sel.ChoicePadFootnote = "Select and press Enter to confirm"
+    sel.StatusBarContent = "i am status"
+
+    s := NewSelectWin(&sel)
+
+    if s == 255 {
+        log.Println("Selected 'Close'")
+    } else {
+        log.Println("Closed. Selected index:", s, "which indicates", sel.Choices[s])
+    }
+}
+
+func NewSelectWin(win *SelectWin) (selectedItem int) {
+    selectedItem = 255
     // 新建主题
     t := tui.NewTheme()
-
-    var titleLabel *tui.Label
-    if win.MainTitle != "" {
-       titleLabel = tui.NewLabel(win.MainTitle)
-    } else {
-       titleLabel = tui.NewLabel("Main")
-    }
-
-    title := &StyledBox{
-       Style: "mainTitle",
-       Box:   tui.NewHBox(tui.NewSpacer(), titleLabel, tui.NewSpacer()),
-    }
-    titleLabel.SetStyleName("mainTitle")
-    t.SetStyle("mainTitle", tui.Style{Bg: tui.ColorCyan, Fg: tui.ColorWhite})
 
     // 新建窗口容器
     windowBox := tui.NewVBox()
 
     // 窗口标题
     windowBox.Append(tui.NewPadder(1, 1, tui.NewHBox(tui.NewSpacer(), tui.NewLabel(win.ChoicePadTitle), tui.NewSpacer())))
+    // 窗口描述
     if win.ChoicePadDesc != "" {
         windowBox.Append(tui.NewPadder(1, 0, tui.NewLabel(win.ChoicePadDesc)))
     }
@@ -46,6 +54,7 @@ func NewSelectWin(win SelectWin) (selectedItem int) {
     for _, ch := range win.Choices {
         choices.AddItems(ch)
     }
+    choices.AddItems("Quit")
     choices.SetFocused(true)
     choices.SetSelected(0)
     t.SetStyle("list.item", tui.Style{Bg: tui.ColorBlue, Fg: tui.ColorWhite})
@@ -67,6 +76,20 @@ func NewSelectWin(win SelectWin) (selectedItem int) {
     }
     t.SetStyle("selectwin", tui.Style{Bg: tui.ColorBlue, Fg: tui.ColorWhite})
 
+    // 全局标题
+    var titleLabel *tui.Label
+    if win.MainTitle != "" {
+        titleLabel = tui.NewLabel(win.MainTitle)
+    } else {
+        titleLabel = tui.NewLabel("Main")
+    }
+    title := &StyledBox{
+        Style: "mainTitle",
+        Box:   tui.NewHBox(tui.NewSpacer(), titleLabel, tui.NewSpacer()),
+    }
+    titleLabel.SetStyleName("mainTitle")
+    t.SetStyle("mainTitle", tui.Style{Bg: tui.ColorWhite, Fg: tui.ColorBlack})
+
     // 新建纵向框架
     wrapper := tui.NewVBox(
         title,
@@ -76,6 +99,7 @@ func NewSelectWin(win SelectWin) (selectedItem int) {
         tui.NewSpacer(),
     )
 
+    // 新建主显示
     root := tui.NewVBox(
         wrapper,
         tui.NewPadder(0, 0, status),
@@ -87,11 +111,22 @@ func NewSelectWin(win SelectWin) (selectedItem int) {
         log.Fatal(err)
     }
 
+    // 设置点按事件
+    choices.OnItemActivated(func(t *tui.List) {
+        // 返回值
+        selectedItem = t.Selected()
+        if selectedItem == len(win.Choices) {
+            // 255 表示点按了退出
+            selectedItem = 255
+        }
+        ui.Quit()
+    })
+
+    // 设置主题
     ui.SetTheme(t)
 
     if err := ui.Run(); err != nil {
         log.Fatal(err)
     }
-
-    return 1
+    return
 }

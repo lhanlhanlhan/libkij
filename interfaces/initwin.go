@@ -13,18 +13,16 @@ type InitWin struct {
     NeedProgBar bool
 }
 
-// StyledBox is a Box with an overriden Draw method.
-// Embedding a Widget within another allows overriding of some behaviors.
-type StyledBox struct {
-    Style string
-    *tui.Box
-}
+func InitWinTest() {
+    var init InitWin
+    init.Logo = "   _  __ __  _____  ____  ___           __        __ \n  | |/ //  |/  / / / /  |/  /___ ______/ /_____  / /_\n  |   // /|_/ / / / / /|_/ / __ `/ ___/ //_/ _ \\/ __/\n /   |/ /  / / /_/ / /  / / /_/ / /  / ,< /  __/ /_  \n/_/|_/_/  /_/\\____/_/  /_/\\__,_/_/  /_/|_|\\___/\\__/"
+    init.Prompt = "Initialising, please wait..."
+    init.ShowPeriod = 2000
+    init.NeedProgBar = false
 
-// Draw decorates the Draw call to the widget with a style.
-func (s *StyledBox) Draw(p *tui.Painter) {
-    p.WithStyle(s.Style, func(p *tui.Painter) {
-        s.Box.Draw(p)
-    })
+    NewInitWindow(init)
+
+    log.Println("Closed.")
 }
 
 func NewInitWindow(win InitWin) {
@@ -36,14 +34,17 @@ func NewInitWindow(win InitWin) {
     // 新建主题
     t := tui.NewTheme()
 
+    // 新建logo
+    logo := tui.NewHBox(tui.NewSpacer(), tui.NewLabel(win.Logo), tui.NewSpacer())
+
     // 新建一个提示信息
-    prompt := tui.NewLabel(win.Prompt)
+    prompt := tui.NewHBox(tui.NewSpacer(), tui.NewLabel(win.Prompt), tui.NewSpacer())
 
     // 新建窗口容纳上述内容，以及有一个蓝色背景
     window := &StyledBox{
         Style: "initwin",
         Box:   tui.NewVBox(
-            tui.NewPadder(10, 1, tui.NewLabel(win.Logo)),
+            tui.NewPadder(10, 1, logo),
             tui.NewPadder(8, 1, prompt),
         ),
     }
