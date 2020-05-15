@@ -9,85 +9,89 @@
 #ifndef libkij_h
 #define libkij_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdio.h>
 
 // a_1) 登陆界面参数
 typedef struct {
-    char* logo;
-    char* prompt;
-    char* statusBarText;
+    const char* logo;
+    const char* prompt;
+    const char* statusBarText;
 } Kij_AuthWin;
 
 // a_2) 登陆界面返回
 typedef struct {
-    char* username;
-    char* password;
+    const char* username;
+    const char* password;
 } Kij_AuthWin_Results;
 
 // b) 错误弹框参数
 typedef struct {
-    char*   mainTitle;
-    char*   winTitle;
-    char*   errInfo;
-    char**  buttons;
+    const char*   mainTitle;
+    const char*   winTitle;
+    const char*   errInfo;
+    const char**  buttons;
     int     buttonsCount;
 } Kij_ErrorWin;
 
 // c) 信息弹框参数
 typedef struct {
-    char*   mainTitle;
-    char*   winTitle;
-    char*   info;
-    char**  buttons;
+    const char*   mainTitle;
+    const char*   winTitle;
+    const char*   info;
+    const char**  buttons;
     int     buttonsCount;
 } Kij_InfoWin;
 
 // d) 初始化窗口参数
 typedef struct {
-    char*   logo;
-    char*   prompt;
+    const char*   logo;
+    const char*   prompt;
     int     showPeriod;
     char    needProgBar;
 } Kij_InitWin;
 
 // e_1) 键入窗口参数
 typedef struct {
-    char*   mainTitle;
-    char*   winTitle;
-    char**  inputBoxLabels;
+    const char*   mainTitle;
+    const char*   winTitle;
+    const char**  inputBoxLabels;
     int     inputBoxLabelsCount;
-    char**  buttons;
+    const char**  buttons;
     int     buttonsCount;
 } Kij_InputWin;
 
 // e_2) 键入窗口返回
 typedef struct {
     int     selectedButton;
-    char**  texts;
+    const char**  texts;
     int     textsCount;
 } Kij_InputWin_Results;
 
 // f) 选择窗口参数
 typedef struct {
-    char*   mainTitle;
-    char*   winTitle;
-    char*   choiceDesc;
-    char**  choices;
+    const char*   mainTitle;
+    const char*   winTitle;
+    const char*   choiceDesc;
+    const char**  choices;
     int     choicesCount;
-    char*   winFootNote;
-    char*   statusBarText;
+    const char*   winFootNote;
+    const char*   statusBarText;
 } Kij_SelectWin;
 
 // g) 表格窗口参数
 typedef struct {
-    char*   mainTitle;
-    char*   winTitle;
-    char**  columnNames;
+    const char*   mainTitle;
+    const char*   winTitle;
+    const char**  columnNames;
     int*    columnWidths;
     int     columnCount;
     char**  rows;
     int     rowsCount;
-    char**  buttons;
+    const char**  buttons;
     int     buttonsCount;
 } Kij_TableWin;
 
@@ -149,5 +153,8 @@ extern void Kij_NewInitWin(Kij_InitWin* win);
 extern void Kij_Destroy_InitWin(Kij_InitWin* win);
 
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* libkij_h */
