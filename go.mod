@@ -1,4 +1,4 @@
-module libkij
+module github.com/chrishanli/tui-go
 
 go 1.14
 
