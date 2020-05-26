@@ -1,4 +1,4 @@
-package interfaces
+package libkij
 
 import (
     "github.com/chrishanli/tui-go"

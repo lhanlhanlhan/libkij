@@ -1,4 +1,4 @@
-package interfaces
+package libkij
 
 import (
     "fmt"
@@ -6,34 +6,33 @@ import (
     "log"
 )
 
-type InfoWin struct {
+type ErrorWin struct {
     MainTitle       string
-    InfoWinTitle    string
-    Info            string
+    ErrorWinTitle   string
+    Error           string
     Button          []string
 }
 
-func InfoWinTest() {
-    var sel InfoWin
-    sel.MainTitle = " -- XMU Supermarket --"
-    sel.InfoWinTitle = "Information"
-    sel.Info =
+func ErrorWinTest() {
+    var sel ErrorWin
+    sel.ErrorWinTitle = "Error"
+    sel.Error =
 `1. Please note that Apple's 
    guarantee has expired!
 
 2. Please note that Pear's 
    guarantee has expired!`
     sel.Button = []string {
-        "OK", "Cancel",
+        "OK",
     }
 
-    s := NewInfoWin(&sel)
+    s := NewErrorWin(&sel)
 
     log.Println("Closed. Selected index:", s, "which indicates", sel.Button[s])
 
 }
 
-func NewInfoWin(win *InfoWin) (selectedButton int) {
+func NewErrorWin(win *ErrorWin) (selectedButton int) {
     selectedButton = 0
 
     // 新建主题
@@ -44,15 +43,15 @@ func NewInfoWin(win *InfoWin) (selectedButton int) {
 
     // 窗口标题
     windowTitle := &StyledBox {
-        Style : "tabletitle",
-        Box : tui.NewHBox(tui.NewSpacer(), tui.NewLabel(win.InfoWinTitle), tui.NewSpacer()),
+        Style : "errortitle",
+        Box : tui.NewHBox(tui.NewSpacer(), tui.NewLabel(win.ErrorWinTitle), tui.NewSpacer()),
     }
-    t.SetStyle("tabletitle", tui.Style{Bg: tui.ColorCyan, Fg: tui.ColorWhite})
-    windowBox.Append(tui.NewPadder(1, 1, windowTitle))
+    t.SetStyle("errortitle", tui.Style{Bg: tui.ColorRed, Fg: tui.ColorWhite})
 
+    windowBox.Append(tui.NewPadder(1, 1, windowTitle))
     // 窗口描述
-    if win.Info != "" {
-        windowBox.Append(tui.NewPadder(1, 0, tui.NewLabel(win.Info)))
+    if win.Error != "" {
+        windowBox.Append(tui.NewPadder(1, 0, tui.NewLabel(win.Error)))
     }
 
     // 新建窗口容纳上述内容，以及有一个蓝色背景
@@ -115,14 +114,15 @@ func NewInfoWin(win *InfoWin) (selectedButton int) {
     }
     buttons.Append(tui.NewSpacer())
     windowBox.Append(buttons)
-    tui.DefaultFocusChain.Set(choices...)
 
     // 设置主题
     ui.SetTheme(t)
+    tui.DefaultFocusChain.Set(choices...)
 
     if err := ui.Run(); err != nil {
         log.Fatal(err)
     }
+
 
     return
 
