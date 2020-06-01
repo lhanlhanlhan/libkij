@@ -1,6 +1,6 @@
 # Introduce
 
-libkij - A framework to create dynamic, colourful, cross-interface TUI (Terminal User Interfaces) programmes in easy ways. The framework also enables controlling by arrow keys.
+libkij - A framework to create dynamic, colourful, cross-platform TUI (Terminal User Interfaces) programmes in easy ways. The framework also enables controlling by arrow keys.
 
 # Usage
 
