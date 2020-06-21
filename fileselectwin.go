@@ -32,7 +32,7 @@ func NewFileSelWin(win *FileSelWin) (selectedFilePath string) {
         for _, extension := range win.Extensions {
             title += "*." + extension + " "
         }
-        title += "file\nEnter Key: submit / enter directory | Esc Key: quit"
+        title += "file\nEnter Key: submit / enter directory | Esc Key: quit | Left Key: parent dir"
     }
     titleLabel := tui.NewLabel(title)
     titleBox := tui.NewHBox(titleLabel)
@@ -44,14 +44,6 @@ func NewFileSelWin(win *FileSelWin) (selectedFilePath string) {
     cdBox.SetBorder(true)
     cdBox.SetSizePolicy(tui.Expanding, tui.Minimum)
 
-    // siblings directory display
-    parentList := tui.NewList()
-    makeParentList(parentList, win.HiddenDisplay)
-    parentBox := tui.NewVBox(parentList)
-    parentBox.SetTitle(" PARENT DIRs ")
-    parentBox.SetBorder(true)
-    parentBox.SetSizePolicy(tui.Minimum, tui.Maximum)
-
     // display files inside current path
     currentList := tui.NewList()
     makeCurrentList(currentList, win.Extensions, win.HiddenDisplay)
@@ -61,9 +53,7 @@ func NewFileSelWin(win *FileSelWin) (selectedFilePath string) {
     currentBox.SetBorder(true)
     currentBox.SetSizePolicy(tui.Expanding, tui.Expanding)
 
-    tree := tui.NewHBox(parentBox, currentBox)
-
-    root := tui.NewVBox(titleBox, cdBox, tree)
+    root := tui.NewVBox(titleBox, cdBox, currentBox)
     ui, err := tui.New(root)
     if err != nil {
         panic(err)
@@ -101,7 +91,6 @@ func NewFileSelWin(win *FileSelWin) (selectedFilePath string) {
         os.Chdir("../")
         setCDBox(cdBox)
         makeCurrentList(currentList, win.Extensions, win.HiddenDisplay)
-        makeParentList(parentList, win.HiddenDisplay)
     })
     ui.SetKeybinding("Right", func() {
         if currentList.Length() > 0 {
@@ -109,7 +98,6 @@ func NewFileSelWin(win *FileSelWin) (selectedFilePath string) {
             if err == nil {
                 setCDBox(cdBox)
                 makeCurrentList(currentList, win.Extensions, win.HiddenDisplay)
-                makeParentList(parentList, win.HiddenDisplay)
             }
         }
     })
@@ -126,7 +114,6 @@ func NewFileSelWin(win *FileSelWin) (selectedFilePath string) {
                 if err == nil {
                     setCDBox(cdBox)
                     makeCurrentList(currentList, win.Extensions, win.HiddenDisplay)
-                    makeParentList(parentList, win.HiddenDisplay)
                 }
             }
         }
