@@ -122,9 +122,5 @@ func NewErrorWin(win *ErrorWin) (selectedButton int) {
     if err := ui.Run(); err != nil {
         log.Fatal(err)
     }
-
-
-    return
-
     return
 }
