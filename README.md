@@ -1,10 +1,10 @@
 # Introduce
 
-libkij - A framework to create dynamic, colourful, cross-platform TUI (Terminal User Interfaces) programmes in easy ways. The framework also enables controlling by arrow keys.
+libkij - A framework to create dynamic, colourful, cross-platform TUI (Terminal User Interfaces) programs in easy ways.
 
 # Usage
 
-Add ``kij.h`` into your project's include folder, then link the dynamic library that correspond to the right artifact.
+Add ``kij.h`` into the target project's include folder then link the dynamic library that correspond to the right artifact.
 
 # Snapshots
 ![1. Login Page](https://github.com/chrishanli/libkij/blob/master/snapshots/1.png)
